@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    background: black;
+    color: #0ff;
+    overflow-x: hidden;
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 40px;
+}
+
+nav {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 15px;
+    max-width: 900px;
+    margin: auto;
+}
+
+nav a {
+    margin: 10px;
+    color: #0ff;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.neon {
+    font-size: 50px;
+    text-shadow: 
+        0 0 5px #0ff,
+        0 0 10px #0ff,
+        0 0 20px #0ff;
+}
+
+.subtitle {
+    opacity: 0.7;
+}
+
+button {
+    background: transparent;
+    border: 1px solid #0ff;
+    color: #0ff;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0ff;
+    color: black;
+    box-shadow: 0 0 10px #0ff;
+}
+
+.card {
+    border: 1px solid #0ff;
+    margin: 40px;
+    padding: 15px;
+    box-shadow: 0 0 10px #0ff;
+}
+.hidden {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: 0.6s;
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+@media (max-width: 768px) {
+
+    .neon {
+        font-size: 30px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .card {
+        margin: 20px 10px;
+        padding: 10px;
+    }
+
+    nav a {
+        display: block;
+        margin: 10px 0;
+    }
+
+    button {
+        width: 80%;
+    }
+}
