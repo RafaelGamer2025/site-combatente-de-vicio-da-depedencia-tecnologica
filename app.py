@@ -1,11 +1,13 @@
+import os
 from flask import Flask, render_template
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(
     __name__,
-    template_folder="aula1/templates",
-    static_folder="aula1/static"
+    template_folder=os.path.join(BASE_DIR, "aula1", "templates"),
+    static_folder=os.path.join(BASE_DIR, "aula1", "static")
 )
-
 
 @app.route("/")
 def home():
@@ -13,7 +15,7 @@ def home():
 
 @app.route("/combater")
 def combater():
-    return render_template("combater.html")
+    return render_template("ferramentas.html")
 
 
 if __name__ == "__main__":
