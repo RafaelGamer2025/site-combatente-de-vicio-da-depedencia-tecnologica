@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="neon">Como Combater o Vício</h2>
+
+<div class="card hidden">
+<h3>📵 1. Crie limites</h3>
+<p>Defina horários sem celular, principalmente antes de dormir.</p>
+</div>
+
+<div class="card hidden">
+<h3>⏳ 2. Use técnica Pomodoro</h3>
+<p>25 minutos de foco, 5 de descanso.</p>
+<button onclick="startTimer()">Iniciar</button>
+<p id="timer"></p>
+</div>
+
+<div class="card hidden">
+<h3>🧠 3. Substitua o hábito</h3>
+<p>Troque tempo de tela por leitura, exercício ou algo produtivo.</p>
+</div>
+
+<div class="card hidden">
+<h3>🔕 4. Desative notificações</h3>
+<p>Reduza distrações automáticas.</p>
+</div>
+
+<div class="card hidden">
+<h3>🎯 5. Desafio do dia</h3>
+<button onclick="desafio()">Gerar desafio</button>
+<p id="desafio"></p>
+</div>
+
+<button onclick="mudarTema()">Mudar Estilo ✨</button>
+<div id="motivacao"></div>
+{% endblock %}

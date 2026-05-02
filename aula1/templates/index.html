@@ -1,36 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2 class="neon">Como Combater o Vício</h2>
 
-<div class="card hidden">
-<h3>📵 1. Crie limites</h3>
-<p>Defina horários sem celular, principalmente antes de dormir.</p>
+<h1 class="neon">Controle Digital</h1>
+
+<p class="subtitle">
+Recupere seu foco, sua mente e seu tempo.
+</p>
+
+<div class="card">
+    <h3>📊 Entenda o problema</h3>
+    <p>Saiba o que é dependência digital.</p>
+    <a href="/info"><button>Ver mais</button></a>
 </div>
 
-<div class="card hidden">
-<h3>⏳ 2. Use técnica Pomodoro</h3>
-<p>25 minutos de foco, 5 de descanso.</p>
-<button onclick="startTimer()">Iniciar</button>
-<p id="timer"></p>
+<div class="card">
+    <h3>🧠 Combata o vício</h3>
+    <p>Dicas práticas para mudar seus hábitos.</p>
+    <a href="/combater"><button>Ir</button></a>
 </div>
 
-<div class="card hidden">
-<h3>🧠 3. Substitua o hábito</h3>
-<p>Troque tempo de tela por leitura, exercício ou algo produtivo.</p>
+<div class="card">
+    <h3>🛠️ Ferramentas</h3>
+    <p>Timer, desafios e foco.</p>
+    <a href="/ferramentas"><button>Acessar</button></a>
 </div>
 
-<div class="card hidden">
-<h3>🔕 4. Desative notificações</h3>
-<p>Reduza distrações automáticas.</p>
-</div>
-
-<div class="card hidden">
-<h3>🎯 5. Desafio do dia</h3>
-<button onclick="desafio()">Gerar desafio</button>
-<p id="desafio"></p>
-</div>
-
-<button onclick="mudarTema()">Mudar Estilo ✨</button>
-<div id="motivacao"></div>
 {% endblock %}
