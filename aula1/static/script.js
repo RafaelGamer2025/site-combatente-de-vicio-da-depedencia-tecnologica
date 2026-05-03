@@ -93,7 +93,7 @@ function draw() {
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        if (wave.radius > 120) {
+        if (wave.radius > 900) {
             waves.splice(i, 1);
         }
     });
