@@ -13,13 +13,13 @@ app = Flask(
 def home():
     return render_template("index.html")
 
-@app.route("/o+que+é")
-def o_que_e():
+@app.route("/info")
+def info():
     return render_template("info.html")
 
 @app.route("/como+combater")
 def home_redirect():
     return render_template("combater.html")
-    
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
