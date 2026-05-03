@@ -15,13 +15,23 @@ let waves = [];
 const MAX_WAVES = 15;
 let lastMove = 0;
 
-function createWave(x, y) {
-    if (waves.length > MAX_WAVES) return;
+function createWave(x, y, isScroll = false) {
+    if (waves.length > MAX_WAVES && !isScroll) return;
+
+    const maxRadius = isScroll
+        ? Math.hypot(canvas.width, canvas.height)
+        : 100;
+
+    const growRate = isScroll ? 8 : 2;
+    const lineWidth = isScroll ? 6 : 2;
 
     waves.push({
         x,
         y,
-        radius: 0
+        radius: 0,
+        maxRadius,
+        growRate,
+        lineWidth
     });
 }
 
@@ -68,7 +78,7 @@ window.addEventListener("scroll", () => {
     let now = Date.now();
 
     if (now - lastScroll > 200) {
-        createWave(window.innerWidth / 2, window.innerHeight / 2);
+        createWave(window.innerWidth / 2, window.innerHeight / 2, true);
         vibrar();
         lastScroll = now;
     }
@@ -84,19 +94,21 @@ window.addEventListener("scroll", () => {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    waves.forEach((wave, i) => {
-        wave.radius += 2;
+    for (let i = waves.length - 1; i >= 0; i--) {
+        const wave = waves[i];
+        wave.radius += wave.growRate || 2;
 
         ctx.beginPath();
         ctx.arc(wave.x, wave.y, wave.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(0,255,255,${1 - wave.radius / 120})`;
-        ctx.lineWidth = 2;
+        const alpha = Math.max(0, 1 - wave.radius / wave.maxRadius);
+        ctx.strokeStyle = `rgba(0,255,255,${alpha})`;
+        ctx.lineWidth = wave.lineWidth || 2;
         ctx.stroke();
 
-        if (wave.radius > 900) {
+        if (wave.radius > wave.maxRadius) {
             waves.splice(i, 1);
         }
-    });
+    }
 
     requestAnimationFrame(draw);
 }
