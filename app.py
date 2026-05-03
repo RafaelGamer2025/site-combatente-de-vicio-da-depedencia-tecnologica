@@ -17,8 +17,8 @@ def home():
 def info():
     return render_template("info.html")
 
-@app.route("/como+combater")
-def home_redirect():
+@app.route("/combater")
+def combater():
     return render_template("combater.html")
 
 if __name__ == "__main__":
