@@ -1,27 +1,126 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Controle Digital</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle Digital</title>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="description" content="Recupere seu foco e reduza dependência digital. Ferramentas: timer, desafios, estatísticas.">
+    <meta name="keywords" content="foco, dependência digital, pomodoro, timer, produtividade">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="Controle Digital — Recupere seu foco">
+    <meta property="og:description" content="Recupere seu foco e reduza dependência digital com ferramentas práticas.">
+    <meta name="theme-color" content="#001122">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 <body>
 
+<a class="skip-link" href="#main">Ir para conteúdo</a>
 <canvas id="water"></canvas>
 
-<nav>
-    <a href="{{ url_for('home') }}">Início</a>
-    <a href="{{ url_for('info') }}">Info</a>
-    <a href="{{ url_for('combater') }}">Combater</a>
-</nav>
+<header class="topbar">
+    <div class="brand">
+        <a href="{{ url_for('home') }}">Controle Digital</a>
+    </div>
+    <nav class="main-nav">
+        <a href="{{ url_for('home') }}">Início</a>
+        <a href="{{ url_for('info') }}">Info</a>
+        <a href="{{ url_for('combater') }}">Combater</a>
+        <a href="{{ url_for('ferramentas') }}">Ferramentas</a>
+    </nav>
+    <div class="top-actions">
+        <button id="open-widget" class="btn small">Painel</button>
+        <button class="btn small" onclick="startTimer();" title="Iniciar 25 minutos">25m</button>
+        <button class="btn small" onclick="startTimerWidget(5);" title="Iniciar 5 minutos">5m</button>
+        <button class="btn small" onclick="desafio();" title="Gerar desafio">Desafio</button>
+    </div>
+</header>
 
+<main id="main" class="container">
+        {% block content %}{% endblock %}
+</main>
 
-<div class="container">
-    {% block content %}{% endblock %}
+<!-- Widget flutuante -->
+<div id="widget" class="widget" aria-hidden="true">
+    <button id="widget-toggle" class="widget-toggle" aria-label="Abrir painel">⚡</button>
+    <div class="widget-panel" role="dialog" aria-label="Painel de Foco" hidden>
+        <div class="widget-tabs" role="tablist" aria-label="Abas do painel">
+            <button role="tab" class="widget-tab active" data-tab="timer">Timer</button>
+            <button role="tab" class="widget-tab" data-tab="desafio">Desafio</button>
+            <button role="tab" class="widget-tab" data-tab="stats">Estatísticas</button>
+            <button role="tab" class="widget-tab" data-tab="perfil">Perfil</button>
+            <button role="tab" class="widget-tab" data-tab="settings">Ajustes</button>
+        </div>
+        <div class="widget-content">
+            <section id="tab-timer" class="widget-body">
+                <h4>Timer Pomodoro</h4>
+                <div class="timer-display" id="widget-timer">25:00</div>
+                <div class="timer-controls">
+                    <button id="widget-start" class="btn">Iniciar</button>
+                    <button id="widget-pause" class="btn">Pausar</button>
+                    <button id="widget-reset" class="btn">Reset</button>
+                </div>
+                <div class="quick-sets">
+                    <button data-min="5" class="btn small">5</button>
+                    <button data-min="15" class="btn small">15</button>
+                    <button data-min="25" class="btn small">25</button>
+                </div>
+            </section>
+            <section id="tab-desafio" class="widget-body hidden">
+                <h4>Desafio do Dia</h4>
+                <p id="widget-desafio">Clique para gerar um desafio.</p>
+                <div class="widget-actions">
+                    <button id="widget-gerar" class="btn">Gerar</button>
+                    <button id="widget-completar" class="btn">Completei</button>
+                </div>
+            </section>
+            <section id="tab-stats" class="widget-body hidden">
+                <h4>Suas Estatísticas</h4>
+                <ul class="stats-list">
+                    <li>Total sessões: <span id="stat-sessions">0</span></li>
+                    <li>Minutos focados: <span id="stat-minutes">0</span></li>
+                    <li>Melhor sequência: <span id="stat-streak">0</span></li>
+                </ul>
+            </section>
+            <section id="tab-perfil" class="widget-body hidden">
+                <h4>Perfil</h4>
+                <label>Nome<br><input id="profile-name" type="text" placeholder="Seu nome"></label>
+                <label>Email (opcional)<br><input id="profile-email" type="email" placeholder="seu@exemplo.com"></label>
+                <label>Tempo padrão (min)<br>
+                    <select id="profile-focus">
+                        <option value="5">5</option>
+                        <option value="15">15</option>
+                        <option value="25" selected>25</option>
+                        <option value="45">45</option>
+                    </select>
+                </label>
+                <label>Cor de destaque<br><input id="profile-accent" type="color" value="#00f0e6"></label>
+                <div class="widget-actions">
+                    <button id="profile-save" class="btn">Salvar</button>
+                    <button id="profile-clear" class="btn">Excluir dados</button>
+                </div>
+            </section>
+            <section id="tab-settings" class="widget-body hidden">
+                <h4>Ajustes</h4>
+                <label class="setting"><input type="checkbox" id="setting-vibrate" checked> Vibrar</label>
+                <label class="setting"><input type="checkbox" id="setting-sounds"> Sons</label>
+            </section>
+        </div>
+    </div>
 </div>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+        <a href="{{ url_for('privacidade') }}">Política de Privacidade</a>
+        &nbsp;·&nbsp;
+        <a href="{{ url_for('termos') }}">Termos de Uso</a>
+    </div>
+    <div class="footer-note">&copy; Controle Digital</div>
+</footer>
+
+<iframe width="110" height="200" scr="https://www.myinstants.com/instant/michael-jackson-hee-hee-40277/embed/" frameboard="0" scrolling="no"></iframe>
 
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 
