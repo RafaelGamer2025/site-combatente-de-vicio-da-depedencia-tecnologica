@@ -150,12 +150,28 @@ function pauseTimerWidget() {
 
 function resetTimerWidget() { clearInterval(timerState.intervalId); timerState.running = false; timerState.intervalId = null; timerState.remaining = timerState.defaultFocus || 25 * 60; updateTimerDisplay(); saveTimerState(); }
 
-function onTimerFinish() {
-    const stats = getStats(); stats.sessions = (stats.sessions || 0) + 1; stats.minutes = (stats.minutes || 0) + Math.floor((timerState.defaultFocus || 25 * 60) / 60);
-    updateStreak(stats); saveStats(stats); updateStatsUI(); vibrar(); createWave(window.innerWidth / 2, window.innerHeight / 2, true);
-    try { alert('Sessão finalizada! Bom trabalho.'); } catch (e) {}
+function play(src) {
+    const audio = new Audio(src);
+    audio.play();
 }
 
+function onTimerFinish() {
+    const stats = getStats();
+
+    stats.sessions = (stats.sessions || 0) + 1;
+    stats.minutes = (stats.minutes || 0) + Math.floor((timerState.defaultFocus || 25 * 60) / 60);
+
+    updateStreak(stats);
+    saveStats(stats);
+    updateStatsUI();
+
+    checkAchievements(stats); // ✅ AQUI
+
+    vibrar();
+    createWave(window.innerWidth / 2, window.innerHeight / 2, true);
+
+    alert('Sessão finalizada! Bom trabalho.');
+}
 /* LocalStorage helpers */
 function getStats() { const s = localStorage.getItem('cd_stats'); return s ? JSON.parse(s) : { sessions: 0, minutes: 0, streak: 0, lastDate: null }; }
 function saveStats(s) { localStorage.setItem('cd_stats', JSON.stringify(s)); }

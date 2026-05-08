@@ -1,38 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <h2 class="neon">Como Combater o Vício</h2>
 
 <div class="card hidden">
 <h3>📵 1. Crie limites</h3>
-<p>Defina horários sem celular, principalmente antes de dormir.</p>
+<p>Defina horários sem celular.</p>
 </div>
 
 <div class="card hidden">
-<h3>⏳ 2. Use técnica Pomodoro</h3>
-<p>25 minutos de foco, 5 de descanso.</p>
+<h3>⏳ 2. Pomodoro</h3>
 <button onclick="startTimer()">Iniciar</button>
 <p id="timer"></p>
 </div>
 
 <div class="card hidden">
-<h3>🧠 3. Substitua o hábito</h3>
-<p>Troque tempo de tela por leitura, exercício ou algo produtivo.</p>
-</div>
-
-<div class="card hidden">
-<h3>🔕 4. Desative notificações</h3>
-<p>Reduza distrações automáticas.</p>
-</div>
-
-<div class="card hidden">
-<h3>🎯 5. Desafio do dia</h3>
+<h3>🎯 Desafio</h3>
 <button onclick="desafio()">Gerar desafio</button>
 <p id="desafio"></p>
 </div>
 
-<button><iframe width="110" height="110" scr="https://www.myinstants.com/instant/michael-jackson-hee-hee-40277/embed/" frameboard="0" scrolling="no"></iframe></button>
+<h3>😎 Som</h3>
 
+<iframe width="110" height="110"
+src="https://www.myinstants.com/instant/michael-jackson-hee-hee-40277/embed/"
+frameborder="0"
+scrolling="no">
+</iframe>
 
 <div id="motivacao"></div>
+
 {% endblock %}

@@ -1,15 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <h2>Ferramentas</h2>
 
 <h3>⏱️ Timer de foco</h3>
 <button onclick="startTimer()">Começar 25 min</button>
 <p id="timer"></p>
 
-<button><iframe width="110" height="110" scr="https://www.myinstants.com/instant/michael-jackson-hee-hee-40277/embed/" frameboard="0" scrolling="no"></iframe></button>
+<h3>😎 Som</h3>
+<iframe width="110" height="110"
+src="https://www.myinstants.com/instant/michael-jackson-hee-hee-40277/embed/"
+frameborder="0"
+scrolling="no">
+</iframe>
 
+<br><br>
 
 <button onclick="desafio()">Gerar desafio</button>
 <p id="desafio"></p>
+
 {% endblock %}
