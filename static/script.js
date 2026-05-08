@@ -53,7 +53,30 @@ window.addEventListener("scroll", () => {
     if (container) container.style.transform = `translateY(${window.scrollY * 0.12}px)`;
 });
 
+let blocked = false;
 
+function bloquearModo() {
+    blocked = true;
+    alert("Modo foco ativado. Evite sair!");
+}
+
+window.onblur = () => {
+    if (blocked) {
+        alert("Volta pro foco 👀");
+    }
+};
+let lastActive = Date.now();
+
+document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+        lastActive = Date.now();
+    } else {
+        let diff = (Date.now() - lastActive) / 1000;
+        if (diff > 10) {
+            alert(`Você ficou ${Math.floor(diff)}s fora 😬`);
+        }
+    }
+});
 // ====== ANIMAÇÃO ======
 function draw() {
     if (!ctx) return;
@@ -88,7 +111,14 @@ function motivacao() {
     const el = document.getElementById("motivacao"); if (el) el.innerText = frases[Math.floor(Math.random() * frases.length)];
 }
 
-
+function checkAchievements(stats) {
+    if (stats.sessions === 10) {
+        alert("🏆 10 sessões concluídas!");
+    }
+}
+window.onbeforeunload = function () {
+    return "Você quer mesmo sair do foco?";
+};
 // ====== TIMER / MECÂNICAS ======
 let timerState = { remaining: 25 * 60, running: false, intervalId: null, defaultFocus: 25 * 60 };
 
@@ -98,6 +128,8 @@ function updateTimerDisplay() {
     document.querySelectorAll('#timer, #widget-timer').forEach(d => { if (d) d.innerText = formatTime(timerState.remaining); });
 }
 
+
+
 function startTimerWidget(minutes) {
     if (typeof minutes === 'number') { timerState.remaining = minutes * 60; timerState.defaultFocus = minutes * 60; }
     if (timerState.running) return;
@@ -106,7 +138,7 @@ function startTimerWidget(minutes) {
         timerState.remaining--;
         updateTimerDisplay();
         if (timerState.remaining < 0) {
-            clearInterval(timerState.intervalId); timerState.running = false; timerState.intervalId = null; onTimerFinish();
+            clearInterval(timerState.intervalId); timerState.running = false; timerState.intervalId = null; onTimerFinish(checkarAchievements);
         }
     }, 1000);
     saveTimerState();
